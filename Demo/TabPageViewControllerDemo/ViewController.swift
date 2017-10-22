@@ -31,6 +31,10 @@ class ViewController: UIViewController {
         option.tabWidth = view.frame.width / CGFloat(tc.tabItems.count)
         option.hidesTopViewOnSwipeType = .all
         tc.option = option
+        tc.indexSelected = { (index) in
+            print("--------------------------------")
+            print(index)
+        }
         navigationController?.pushViewController(tc, animated: true)
     }
 
@@ -54,6 +58,10 @@ class ViewController: UIViewController {
         option.currentColor = UIColor(red: 246/255, green: 175/255, blue: 32/255, alpha: 1.0)
         option.tabMargin = 30.0
         tc.option = option
+        tc.indexSelected = { (index) in
+            print("--------------------------------")
+            print(index)
+        }
         navigationController?.pushViewController(tc, animated: true)
     }
 }
