@@ -30,6 +30,8 @@ class ViewController: UIViewController {
         var option = TabPageOption()
         option.tabWidth = view.frame.width / CGFloat(tc.tabItems.count)
         option.hidesTopViewOnSwipeType = .all
+        option.normalBackground = .white
+        option.selectedBackground = .red
         tc.option = option
         tc.indexSelected = { (index) in
             print("--------------------------------")
