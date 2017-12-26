@@ -91,7 +91,7 @@ internal class TabView: UIView {
 
         currentBarView.backgroundColor = option.currentColor
         currentBarViewHeightConstraint.constant = option.currentBarHeight
-        if !isInfinity {
+        if !isInfinity && !self.option.isSelectTabCenter {
             currentBarView.removeFromSuperview()
             collectionView.addSubview(currentBarView)
             currentBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -170,12 +170,12 @@ extension TabView {
             }
 
             let width = fabs(scrollRate) * (nextCell.frame.width - currentCell.frame.width)
-            if isInfinity {
+            if isInfinity || self.option.isSelectTabCenter {
                 let scroll = scrollRate * distance
                 collectionView.contentOffset.x = collectionViewContentOffsetX + scroll
             } else {
                 if scrollRate > 0 {
-                currentBarViewLeftConstraint?.constant = currentCell.frame.minX + scrollRate * currentCell.frame.width
+                    currentBarViewLeftConstraint?.constant = currentCell.frame.minX + scrollRate * currentCell.frame.width
                 } else {
                     currentBarViewLeftConstraint?.constant = currentCell.frame.minX + nextCell.frame.width * scrollRate
                 }
@@ -202,7 +202,7 @@ extension TabView {
         deselectVisibleCells()
 
         currentIndex = isInfinity ? index + pageTabItemsCount : index
-
+        print("currentIndex:\(currentIndex)")
         let indexPath = IndexPath(item: currentIndex, section: 0)
         moveCurrentBarView(indexPath, animated: !isInfinity, shouldScroll: shouldScroll)
     }
@@ -218,6 +218,9 @@ extension TabView {
         if isInfinity && (index < pageTabItemsCount) || (index >= pageTabItemsCount * 2) {
             currentIndex = (index < pageTabItemsCount) ? index + pageTabItemsCount : index - pageTabItemsCount
             shouldScrollToItem = true
+        } else if option.isSelectTabCenter {
+            //shouldScrollToItem = true
+            currentIndex = index
         } else {
             currentIndex = index
         }
@@ -348,16 +351,21 @@ extension TabView: UICollectionViewDelegate {
             }
         }
 
-        guard isInfinity else {
+        if !isInfinity && !self.option.isSelectTabCenter {
             return
         }
+        if isInfinity {
+            if pageTabItemsWidth == 0.0 {
+                pageTabItemsWidth = floor(scrollView.contentSize.width / 3.0)
+            }
 
-        if pageTabItemsWidth == 0.0 {
-            pageTabItemsWidth = floor(scrollView.contentSize.width / 3.0)
-        }
-
-        if (scrollView.contentOffset.x <= 0.0) || (scrollView.contentOffset.x > pageTabItemsWidth * 2.0) {
-            scrollView.contentOffset.x = pageTabItemsWidth
+            if (scrollView.contentOffset.x <= 0.0) || (scrollView.contentOffset.x > pageTabItemsWidth * 2.0) {
+                scrollView.contentOffset.x = pageTabItemsWidth
+            }
+        } else {
+            let offx =  -(self.frame.size.width / 2.0) - cellForSize.frame.size.width/2 - option.tabMargin
+            print("offx:\(offx)")
+            scrollView.contentOffset.x = offx
         }
 
     }
