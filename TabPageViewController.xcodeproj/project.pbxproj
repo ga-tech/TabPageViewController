@@ -499,6 +499,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TabPageViewController;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_VERSION = 4.0;
 				TARGET_NAME = TabPageViewController;
 			};
 			name = Debug;
@@ -524,6 +525,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TabPageViewController;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_VERSION = 4.0;
 				TARGET_NAME = TabPageViewController;
 			};
 			name = Release;
